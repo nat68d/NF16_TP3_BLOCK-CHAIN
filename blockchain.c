@@ -207,6 +207,7 @@ void afficheBlockChainEtu(BlockChain bc, int idEtu){
    int choix=0;
    if(scanf("%d",&choix)!=1)
       choix=0;
+   fflush(stdin);
    if (choix)
    {
       printf("DEBUT AFFICHAGE BLOCKCHAIN\n\n");
@@ -258,6 +259,7 @@ int ExportVersFichier(BlockChain bc) //return 1 s'il n'y a pas d'erreur de proce
     {
         scanf("%s", NomFichier);
         test=fopen(NomFichier,"r");
+        fflush(stdin) ;
         if(test==NULL)
         {
             boolean=1;
@@ -288,23 +290,25 @@ int ExportVersFichier(BlockChain bc) //return 1 s'il n'y a pas d'erreur de proce
 BlockChain ImportDunFichier()
 {
     BlockChain bc=NULL;
-    FILE * fichier;
     char NomFichier[M];
     int idetu,i;
     int* date_precedente=malloc(3*sizeof(int));
     int* date=malloc(3*sizeof(int));
     float montant;
     char description[M];
+    char chaine[MAX] = "";
+
     printf("Veuillez entrer le nom exact du fichier a importer : \n");
     scanf("%s", NomFichier);
     fflush(stdin) ;
-    fichier=fopen(NomFichier,"r");
+
+    FILE * fichier=fopen(NomFichier,"r");
     if (fichier != NULL)
     {
-      char chaine[MAX] = "";
       while(fgets(chaine, MAX, fichier) != NULL)
       {
-         int retour=sscanf(chaine,"Date %d / %d / %d, Etudiant: %d , Montant : %f , Description: %s\n",&date[0],&date[1],&date[2],&idetu, &montant, description);
+         int retour=sscanf(chaine,"Date %d / %d / %d, Etudiant: %d , Montant : %f , Description: %s\n",
+                           &date[0],&date[1],&date[2],&idetu, &montant, description);
          if(retour==6)
          {
             if((bc==NULL) || (date[0]!=date_precedente[0])||(date[1]!=date_precedente[1])||(date[2]!=date_precedente[2]))
@@ -323,7 +327,7 @@ BlockChain ImportDunFichier()
     }
     else
     {
-      printf("Ce nom n'appartient a aucun fichier connu \n\n");
+      printf("Le fichier '%s' n'existe pas ! \n\n", NomFichier);
     }
     return bc;
 }

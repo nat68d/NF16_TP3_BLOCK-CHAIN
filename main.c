@@ -21,7 +21,7 @@ int main()
         printf("   9. Exporter toutes les transactions vers un fichier\n");
         printf("  10. Importer des transactions depuis un fichier\n");
 
-        printf("\n\nQue voulez vous faire ? ");
+        printf("\nQue voulez vous faire ? ");
         if (scanf("%d",&choix)!=1)
          choix=0;
         fflush(stdin);
