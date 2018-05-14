@@ -3,6 +3,8 @@
 #define M 50
 #define MAX 256
 
+#define TOTO 26
+
 typedef struct Transaction T_Transaction;
 struct Transaction
 {
